@@ -1,16 +1,17 @@
-#from gevent import monkey
-#monkey.patch_all()
+# from gevent import monkey
+# monkey.patch_all()
 from dateutil import rrule
 from datetime import datetime, timezone
 from itertools import product
 import time
 import os
 
-#from concurrent.futures import ThreadPoolExecutor
-#import gevent
-#import requests
+# from concurrent.futures import ThreadPoolExecutor
+# import gevent
+# import requests
 from functools import partial
-from tqdm import tqdm
+
+# from tqdm import tqdm
 
 # def check_valid_urls(file_list, session=None):
 #     """if not session:
@@ -68,6 +69,7 @@ memdict = {
 }
 vardict = {1: "channel_rt", 2: "land", 3: "reservoir", 4: "terrain_rt", 5: "forcing"}
 geodict = {1: "conus", 2: "hawaii", 3: "puertorico"}
+
 
 def selectvar(vardict, varinput):
     return vardict[varinput]
@@ -186,7 +188,6 @@ urlbasedict = {
     7: "https://noaa-nwm-pds.s3.amazonaws.com/",
     8: "https://ciroh-nwm-zarr-copy.s3.amazonaws.com/national-water-model/",
 }
-
 
 
 def selecturlbase(urlbasedict, urlbaseinput, defaulturlbase=""):
@@ -436,19 +437,29 @@ def create_file_list(
             )
         )
     return r
-def generate_urls(start_date,end_date, fcst_cycle, lead_time, varinput, geoinput, runinput):
 
-    
+
+def generate_urls(
+    start_date,
+    end_date,
+    fcst_cycle,
+    lead_time,
+    varinput,
+    geoinput,
+    runinput,
+    target_file="filenamelist.txt",
+):
+
     start_date = start_date
-    end_date   = end_date
+    end_date = end_date
     fcst_cycle = fcst_cycle
     # fcst_cycle = None # Retrieves a full day for each day within the range given.
-    #lead_time = [1]
+    # lead_time = [1]
     lead_time = lead_time
     varinput = varinput
-    #vardict = {1: "channel_rt", 2: "land", 3: "reservoir", 4: "terrain_rt", 5: "forcing"}
+    # vardict = {1: "channel_rt", 2: "land", 3: "reservoir", 4: "terrain_rt", 5: "forcing"}
     geoinput = geoinput
-    #geodict = {1: "conus", 2: "hawaii", 3: "puertorico"}
+    # geodict = {1: "conus", 2: "hawaii", 3: "puertorico"}
     meminput = 0
     urlbaseinput = 8
     runinput = runinput
@@ -477,8 +488,8 @@ def generate_urls(start_date,end_date, fcst_cycle, lead_time, varinput, geoinput
         urlbaseinput,
         lead_time,
     )
-    if os.path.exists("filenamelist.txt"):
-        os.remove("filenamelist.txt")   
-    with open("filenamelist.txt", "wt") as file:
+    if os.path.exists(target_file):
+        os.remove(target_file)
+    with open(target_file, "wt") as file:
         for item in file_list:
             file.write(f"{item}.json\n")

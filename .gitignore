@@ -1,0 +1,31 @@
+# pycaches
+__pycache__/
+*.py[cod]
+# venv variants
+venv/
+.venv/
+env/
+.env/
+# dist
+dist/
+build/
+
+# Gitignore from NGIAB_data_preprocess
+modules/*/conus*.*
+*.parquet
+output/*
+!output/.gitkeep
+env
+__pycache__
+.dev
+app.log
+dist
+*.egg-info
+**/tiles/tms*
+**/tiles/vpu*
+*.tar.gz
+*.dat
+uv.lock
+/build
+*.pmtiles
+*style.json
